@@ -24,8 +24,11 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="2" column="0">
+     <item row="2" column="0" alignment="Qt::AlignHCenter">
       <widget class="QTextBrowser" name="textBrowser">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="maximumSize">
         <size>
          <width>158</width>
@@ -33,7 +36,7 @@
         </size>
        </property>
        <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
+        <enum>Qt::RightToLeft</enum>
        </property>
        <property name="html">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -101,8 +104,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>132</x>
-      <y>520</y>
+      <x>130</x>
+      <y>540</y>
       <width>801</width>
       <height>28</height>
      </rect>
@@ -183,7 +186,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>339</y>
+      <y>310</y>
       <width>160</width>
       <height>72</height>
      </rect>
@@ -206,14 +209,26 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>459</y>
+      <y>430</y>
       <width>160</width>
       <height>72</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
+     <property name="verticalSpacing">
+      <number>2</number>
+     </property>
      <item row="0" column="0">
       <widget class="QTextBrowser" name="textBrowser_4">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="html">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;

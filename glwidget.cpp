@@ -31,7 +31,7 @@ using namespace std;
 inline
 double Deg2Rad(double Ang_deg)
   { return Ang_deg*M_PI/180; }
-
+static GLuint Texture4Bg;
 #define SLIDER2RAD(x) static_cast<float>(sin(M_PI*2*ScnParams.Get##x##_Light_deg()/180))
 #define ANG_STEP_deg 10
 GLWidget::GLWidget(QWidget *parent) : QGLViewer(parent)
@@ -41,21 +41,75 @@ angle=0.0;
 
 void GLWidget::init()
 {
-GLfloat light_position[]={3.0, 3.0, 3.0, 0.0};
+//GLfloat light_position[]={3.0, 3.0, 3.0, 0.0};
 restoreFromFile();
 glEnable(GL_DEPTH_TEST);
  glEnable(GL_LIGHT0);
 glEnable(GL_LIGHTING);
-
+Texture4Bg = SOIL_load_OGL_texture
+(
+    "space_dust.jpg",
+            SOIL_LOAD_AUTO,
+            SOIL_CREATE_NEW_ID,
+            SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MULTIPLY_ALPHA
+  );
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+               GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+               GL_NEAREST);
 }
 
 
 void GLWidget::draw(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
 
+       glEnable(GL_TEXTURE_2D);
+       glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+       glBindTexture(GL_TEXTURE_2D, Texture4Bg);
+
+       glMatrixMode(GL_MODELVIEW);
+       glPushMatrix();
+
+       glLoadIdentity();
+       glDepthMask(GL_FALSE);
+
+       glMatrixMode(GL_PROJECTION);
+       glPushMatrix();
+
+       glLoadIdentity();
+       glOrtho(0,1,1,0,-1,1);
+
+       glBegin(GL_QUADS);  // Tworzenie kwadratu, na którym będzie
+        glTexCoord2f(0,0); // rozpięta tekstura tła.
+        glVertex2f(0,0);
+
+        glTexCoord2f(1,0);
+        glVertex2f(1,0);
+
+        glTexCoord2f(1,1);
+        glVertex2f(1,1);
+
+        glTexCoord2f(0,1);
+        glVertex2f(0,1);
+      glEnd();
+
+      glMatrixMode(GL_PROJECTION);
+      glPopMatrix();
+
+      glMatrixMode(GL_MODELVIEW);
+      glPopMatrix();
+      glDepthMask(GL_TRUE);
+
+      glDisable(GL_TEXTURE_2D);
 
      glColor3f(1, 0.5, 0);
+      //---------------------------------
+      // Rysowanie prostokąta
+      //
+     glRectf(0.5, 0.5, 2, 2);
+
     // glViewport(0, 0, 470, 470);
 //    gluLookAt(0,0.8,-1,0,0,0,0,2,0);
     drawSphere(0.5, 1000, 1000);
@@ -114,6 +168,8 @@ glEnd();
       glEnd();
 
 }
+
+
 
 void GLWidget::rotateISS(){
     update();

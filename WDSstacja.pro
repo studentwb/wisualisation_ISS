@@ -37,7 +37,7 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 LIBS+= -lQGLViewer-qt5
-
+LIBS+=-lSOIL
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
