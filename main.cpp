@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
     QSurfaceFormat format;
 
     MainWindow w;
+     w.setWindowTitle("Wizualizacja ISS");
+     w.resize(1000, 650);
     w.show();
     return a.exec();
 }

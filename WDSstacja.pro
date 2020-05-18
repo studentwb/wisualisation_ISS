@@ -36,7 +36,7 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui
-LIBS+=-L/usr/qpt/Lib
+LIBS+= -lQGLViewer-qt5
 
 
 # Default rules for deployment.
