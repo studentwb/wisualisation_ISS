@@ -16,10 +16,10 @@
 #include <QMessageBox>
 #include <QTextStream>
 #define PI 3.1415
-double a1;
-int a2;
-int a3;
-double a4;
+float a1;
+float a2;
+float a3;
+float a4;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -48,6 +48,7 @@ void MainWindow::on_pushButton_clicked()
 
 }
 
+
 void MainWindow::on_results(QNetworkReply *reply)
 {
 
@@ -71,13 +72,17 @@ a2=current_latitude;
 a3=current_longitude;
 a4=current_altitude;
         //szerokosc
-        ui->textBrowser->setText(QString::number(current_latitude));
+        ui->lineEdit->setReadOnly(true);
+        ui->lineEdit->setText(QString::number(current_latitude));
         //dlugosc
-        ui->textBrowser_2->setText(QString::number(current_longitude));
+        ui->lineEdit_2->setReadOnly(true);
+        ui->lineEdit_2->setText(QString::number(current_longitude));
         //wysokosc
-        ui->textBrowser_3->setText(QString::number(current_altitude));
+        ui->lineEdit_3->setReadOnly(true);
+        ui->lineEdit_3->setText(QString::number(current_altitude));
         //predkosc
-        ui->textBrowser_4->setText(QString::number(current_velocity));
+        ui->lineEdit_4->setReadOnly(true);
+        ui->lineEdit_4->setText(QString::number(current_velocity));
 
 
        }
@@ -87,18 +92,14 @@ a4=current_altitude;
         QString error=root.value("error").toString();
         qDebug() << root.value("error");
 
-
-                ui->textBrowser->setText(error);
-                ui->textBrowser_2->setText("ERROR- TOO MANY REQUESTS. PLEASE SHUT DOWN THE APPLICATION");
-                ui->textBrowser_3->setText("ERROR- TOO MANY REQUESTS. PLEASE SHUT DOWN THE APPLICATION");
-                ui->textBrowser_4->setText("ERROR- TOO MANY REQUESTS. PLEASE SHUT DOWN THE APPLICATION");
+                ui->lineEdit_5->setReadOnly(true);
+                ui->lineEdit_5->setText(error+" ERROR- TOO MANY REQUESTS. PLEASE SHUT DOWN THE APPLICATION");
 
 
             if (error==0){ //to dziala
-                ui->textBrowser->setText("ERROR- CONNECTION FALIED");
-                ui->textBrowser_2->setText("ERROR- CONNECTION FALIED");
-                ui->textBrowser_3->setText("ERROR- CONNECTION FALIED");
-                ui->textBrowser_4->setText("ERROR- CONNECTION FALIED");
+                ui->lineEdit_5->setReadOnly(true);
+                ui->lineEdit_5->setText("ERROR- CONNECTION FAILED");
+
                 }
 
 

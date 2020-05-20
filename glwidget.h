@@ -28,7 +28,7 @@ public:
     void rotateISS();
     void drawISS(double Size);
     void rotateBy(int xAngle, int yAngle, int zAngle);
-  //  void resizeGL(int w, int h);
+    void drawPath();
 private:
     void makeObject();
    int xRot;

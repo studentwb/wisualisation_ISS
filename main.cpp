@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
      w.setWindowTitle("Wizualizacja ISS");
-     w.resize(1000, 650);
+     w.resize(1000, 550);
     w.show();
     return a.exec();
 }
