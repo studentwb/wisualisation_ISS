@@ -17,7 +17,7 @@
 #include <QTextStream>
 #define PI 3.1415
 float a1;
-float a2;
+ float a2;
 float a3;
 float a4;
 
@@ -25,6 +25,19 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    GLWidget *a1=new GLWidget(this);
+    a1->setGeometry(120,10,100,100);
+    a1->show();
+  //  A1=a1;
+    GLWidget *a2=new GLWidget(this);
+    a2->setGeometry(120,10,100,100);
+    a2->show();
+    GLWidget *a3=new GLWidget(this);
+    a3->setGeometry(120,10,100,100);
+    a3->show();
+    GLWidget *a4=new GLWidget(this);
+    a4->setGeometry(120,10,100,100);
+    a4->show();
     ui->setupUi(this);
     timer= new QTimer(this);
     mManager = new QNetworkAccessManager(this);
@@ -67,10 +80,10 @@ void MainWindow::on_results(QNetworkReply *reply)
         double current_altitude=root.value("altitude").toDouble();
         qDebug() << root.value("altitude");
 
-a1=current_velocity;
-a2=current_latitude;
-a3=current_longitude;
-a4=current_altitude;
+//a1=current_velocity;
+//a2=current_latitude;
+//a3=current_longitude;
+//a4=current_altitude;
         //szerokosc
         ui->lineEdit->setReadOnly(true);
         ui->lineEdit->setText(QString::number(current_latitude));

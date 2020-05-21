@@ -35,6 +35,7 @@ double Deg2Rad(double Ang_deg)
 static GLuint Texture4Bg;
 #define SLIDER2RAD(x) static_cast<float>(sin(M_PI*2*ScnParams.Get##x##_Light_deg()/180))
 #define ANG_STEP_deg 10
+
 GLWidget::GLWidget(QWidget *parent) : QGLViewer(parent)
  {
 angle=0.0;
@@ -114,7 +115,7 @@ void GLWidget::draw(){
     // glViewport(0, 0, 470, 470);
 //    gluLookAt(0,0.8,-1,0,0,0,0,2,0);
 glColor3f(   0.0,  1.0,  0.0 );
-   drawSphere(0.6371, 1000, 1000); //R Earth=6371km
+ //  drawSphere(0.6371, 1000, 1000); //R Earth=6371km
    glColor3f(   1.0,  0.0,  0.0 );
    drawPath();
    rotateISS();
@@ -127,20 +128,21 @@ void GLWidget::drawPath(){
 
     update();
    // glPushMatrix();
-    glRotatef(angle, 0.0f+a2/100.0f, 0.0f+a3/100.0f, 0.0f);
-     glTranslatef(0,0.0,0.7+(a1/1000.0f));
+    glRotatef(angle, 0.0f+a2/100.0, 0.0f+a3/100.0, 0.0f);
+     glTranslatef(0,0.0,0.7+(a1/1000.0));
      glColor3f(   1.0,  0.0,  0.0 );
       drawSphere(0.01, 1000, 1000);
     glPopMatrix();
 
 }
 
-
 void GLWidget::rotateISS(){
+
+    a1=10.0;
     update();
     glPushMatrix();
-    glRotatef(angle, 0.0f+a2/100.0f, 0.0f+a3/100.0f, 0.0f);
-     glTranslatef(0,0.0,0.0+(a1/1000.0f));
+  //  glRotatef(angle, 0.0f+a2/1000.0, 0.0f+a3/1000.0, 0.0f);
+     glTranslatef(0,0.0,0.0+(a1/10000.0));
       drawISS(0.05);
     glPopMatrix();
     angle +=a1/(10516);

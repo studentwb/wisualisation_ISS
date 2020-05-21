@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include <glwidget.h>
 #include <QMainWindow>
 #include <QJsonDocument>
 #include <QLCDNumber>
@@ -33,5 +33,10 @@ private:
     QNetworkAccessManager *mManager;
     QNetworkRequest request;
     QTimer *timer;
+    QGLWidget *a1;
+    QGLWidget *a2;
+    QGLWidget *a3;
+    QGLWidget *a4;
+
 };
 #endif // MAINWINDOW_H
