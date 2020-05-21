@@ -124,10 +124,19 @@ glColor3f(   0.0,  1.0,  0.0 );
 
    }
 void GLWidget::odbieramtest(float zmienna){
-    qDebug() << "odebralem " <<zmienna;
+    qDebug() << "odebralem 1 " <<zmienna;
 }
-
-
+void GLWidget::getData_2(float value_latitude){
+qDebug() << "odebralem 2 " <<value_latitude;
+}
+void GLWidget::getData_3(float value_longitude)
+{
+    qDebug() << "odebralem 3 " <<value_longitude;
+}
+void GLWidget::getData_4(float value_altitude)
+{
+    qDebug() << "odebralem 4 " <<value_altitude;
+}
 void GLWidget::drawPath(){
 
     update();

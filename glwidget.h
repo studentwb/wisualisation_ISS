@@ -27,18 +27,17 @@ public:
     void drawSphere(double r, int lats, int longs);
     void rotateISS();
     void drawISS(double Size);
-    void rotateBy(int xAngle, int yAngle, int zAngle);
     void drawPath();
 private:
     void makeObject();
-   int xRot;
-    int yRot;
-    int zRot;
-protected:
+   protected:
      void init();
      void draw();
 private slots:
      void odbieramtest(float zamienna1);
+     void getData_2(float value_latitude);
+     void getData_3(float value_longitude);
+     void getData_4(float value_altitude);
 };
 
 #endif // GLWIDGET_H

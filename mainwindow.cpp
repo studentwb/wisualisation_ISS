@@ -29,9 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(on_pushButton_clicked()));
     timer->start(1000);
 
-
-//    ui->gWindow->;
     QObject::connect(this, SIGNAL(test(float)),ui->gWindow, SLOT(odbieramtest(float)));
+    QObject::connect(this, SIGNAL(sendData_2(float)),ui->gWindow, SLOT(getData_2(float)));
+    QObject::connect(this, SIGNAL(sendData_3(float)),ui->gWindow, SLOT(getData_3(float)));
+    QObject::connect(this, SIGNAL(sendData_4(float)),ui->gWindow, SLOT(getData_4(float)));
 }
 MainWindow::~MainWindow()
 {
@@ -66,12 +67,16 @@ void MainWindow::on_results(QNetworkReply *reply)
         qDebug() << root.value("longitude");
         double current_altitude=root.value("altitude").toDouble();
         qDebug() << root.value("altitude");
-        float a1=current_velocity;
+        float a1=current_longitude;
+        float a2=current_latitude;
+        float a3=current_altitude;
+        float a4=current_velocity;
+
         emit test(a1); //wywlouje funkcje, ktora ma byc sygnalem
-//a1=current_velocity;
-//a2=current_latitude;
-//a3=current_longitude;
-//a4=current_altitude;
+        emit sendData_2(a2);
+        emit sendData_3(a3);
+        emit sendData_4(a4);
+
         //szerokosc
         ui->lineEdit->setReadOnly(true);
         ui->lineEdit->setText(QString::number(current_latitude));
