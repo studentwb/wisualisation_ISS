@@ -31,8 +31,7 @@
 float a1, a2, a3, a4;
 using namespace qglviewer;
 using namespace std;
-inline
-double Deg2Rad(double Ang_deg)
+inline double Deg2Rad(double Ang_deg)
   { return Ang_deg*M_PI/180; }
 static GLuint Texture4Bg;
 #define SLIDER2RAD(x) static_cast<float>(sin(M_PI*2*ScnParams.Get##x##_Light_deg()/180))
@@ -47,12 +46,11 @@ void GLWidget::init()
 {
 //GLfloat light_position[]={3.0, 3.0, 3.0, 0.0};
 restoreFromFile();
-glEnable(GL_DEPTH_TEST);
- glEnable(GL_LIGHT0);
-glEnable(GL_LIGHTING);
+glShadeModel(GL_FLAT);
+  glEnable(GL_DEPTH_TEST);
 Texture4Bg = SOIL_load_OGL_texture
 (
-    "space_dust.jpg",
+    "/home/baron/Pobrane/WDSstacja/source/space_dust.jpg",
             SOIL_LOAD_AUTO,
             SOIL_CREATE_NEW_ID,
             SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MULTIPLY_ALPHA
@@ -109,10 +107,7 @@ void GLWidget::draw(){
       glDisable(GL_TEXTURE_2D);
 
      glColor3f(0.0, 0.0, 0);
-      //---------------------------------
-      // Rysowanie prostokąta
-      //
-     glRectf(0.5, 0.5, 2, 2);
+
 
     // glViewport(0, 0, 470, 470);
 //    gluLookAt(0,0.8,-1,0,0,0,0,2,0);
@@ -133,7 +128,7 @@ a2=value_latitude;
 }
 void GLWidget::getData_3(float value_altitude)
 {
-    qDebug() <<"a " <<value_altitude;
+    qDebug() <<value_altitude;
     a3=value_altitude;
 }
 void GLWidget::getData_4(float value_velocity)
@@ -146,7 +141,7 @@ void GLWidget::drawPath(){
     update();
    // glPushMatrix();
     glRotatef(angle, 0.0f+a1/1000.0, 0.0f+a2/1000.0, 0.0f);
-     glTranslatef(0,00.6371+(a3/1000.0),0.0);
+     glTranslatef(0, 0.6371+(a3/1000.0),0.0);
      glColor3f(   1.0,  0.0,  0.0 );
       drawSphere(0.01, 1000, 1000);
     glPopMatrix();
