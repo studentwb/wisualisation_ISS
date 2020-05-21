@@ -37,6 +37,8 @@ private:
 protected:
      void init();
      void draw();
+private slots:
+     void odbieramtest(float zamienna1);
 };
 
 #endif // GLWIDGET_H

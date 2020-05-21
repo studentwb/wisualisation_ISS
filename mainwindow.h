@@ -33,10 +33,8 @@ private:
     QNetworkAccessManager *mManager;
     QNetworkRequest request;
     QTimer *timer;
-    QGLWidget *a1;
-    QGLWidget *a2;
-    QGLWidget *a3;
-    QGLWidget *a4;
+signals:
+    void test(float a1); //przesyly danych
 
 };
 #endif // MAINWINDOW_H

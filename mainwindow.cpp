@@ -16,28 +16,11 @@
 #include <QMessageBox>
 #include <QTextStream>
 #define PI 3.1415
-float a1;
- float a2;
-float a3;
-float a4;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    GLWidget *a1=new GLWidget(this);
-    a1->setGeometry(120,10,100,100);
-    a1->show();
-  //  A1=a1;
-    GLWidget *a2=new GLWidget(this);
-    a2->setGeometry(120,10,100,100);
-    a2->show();
-    GLWidget *a3=new GLWidget(this);
-    a3->setGeometry(120,10,100,100);
-    a3->show();
-    GLWidget *a4=new GLWidget(this);
-    a4->setGeometry(120,10,100,100);
-    a4->show();
     ui->setupUi(this);
     timer= new QTimer(this);
     mManager = new QNetworkAccessManager(this);
@@ -45,6 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
     mManager->get(QNetworkRequest(QUrl("https://api.wheretheiss.at/v1/satellites/25544")));
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(on_pushButton_clicked()));
     timer->start(1000);
+
+
+//    ui->gWindow->;
+    QObject::connect(this, SIGNAL(test(float)),ui->gWindow, SLOT(odbieramtest(float)));
 }
 MainWindow::~MainWindow()
 {
@@ -79,7 +66,8 @@ void MainWindow::on_results(QNetworkReply *reply)
         qDebug() << root.value("longitude");
         double current_altitude=root.value("altitude").toDouble();
         qDebug() << root.value("altitude");
-
+        float a1=current_velocity;
+        emit test(a1); //wywlouje funkcje, ktora ma byc sygnalem
 //a1=current_velocity;
 //a2=current_latitude;
 //a3=current_longitude;

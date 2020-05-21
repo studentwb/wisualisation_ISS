@@ -91,7 +91,7 @@
      <string>Odśwież</string>
     </property>
    </widget>
-   <widget class="GLWidget" name="GLwidget" native="true">
+   <widget class="GLWidget" name="gWindow" native="true">
     <property name="geometry">
      <rect>
       <x>460</x>
@@ -148,7 +148,7 @@
      <rect>
       <x>110</x>
       <y>280</y>
-      <width>211</width>
+      <width>221</width>
       <height>25</height>
      </rect>
     </property>

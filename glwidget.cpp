@@ -11,7 +11,7 @@
 #include <Qt3DExtras/QSphereMesh>
 #include <QGLViewer/qglviewer.h>
 #include <QtGui/QImage>
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>
 #include <QSurfaceFormat>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLTexture>
@@ -27,6 +27,8 @@
 #include <QGLViewer/manipulatedFrame.h>
 #include <QMouseEvent>
 #include <unistd.h>
+#include <QDebug>
+float a1, a2, a3, a4;
 using namespace qglviewer;
 using namespace std;
 inline
@@ -115,13 +117,15 @@ void GLWidget::draw(){
     // glViewport(0, 0, 470, 470);
 //    gluLookAt(0,0.8,-1,0,0,0,0,2,0);
 glColor3f(   0.0,  1.0,  0.0 );
- //  drawSphere(0.6371, 1000, 1000); //R Earth=6371km
+   drawSphere(0.6371, 1000, 1000); //R Earth=6371km
    glColor3f(   1.0,  0.0,  0.0 );
    drawPath();
    rotateISS();
 
    }
-
+void GLWidget::odbieramtest(float zmienna){
+    qDebug() << "odebralem " <<zmienna;
+}
 
 
 void GLWidget::drawPath(){
@@ -138,10 +142,10 @@ void GLWidget::drawPath(){
 
 void GLWidget::rotateISS(){
 
-    a1=10.0;
+    qDebug() <<a1;
     update();
     glPushMatrix();
-  //  glRotatef(angle, 0.0f+a2/1000.0, 0.0f+a3/1000.0, 0.0f);
+    glRotatef(angle, 0.0f+a2/1000.0, 0.0f+a3/1000.0, 0.0f);
      glTranslatef(0,0.0,0.0+(a1/10000.0));
       drawISS(0.05);
     glPopMatrix();
