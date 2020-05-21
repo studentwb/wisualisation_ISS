@@ -123,19 +123,23 @@ glColor3f(   0.0,  1.0,  0.0 );
    rotateISS();
 
    }
-void GLWidget::odbieramtest(float zmienna){
-    qDebug() << "odebralem 1 " <<zmienna;
+void GLWidget::getData_1(float value_longitude){
+    qDebug() <<value_longitude;
+    a1=value_longitude;
 }
 void GLWidget::getData_2(float value_latitude){
-qDebug() << "odebralem 2 " <<value_latitude;
+qDebug() <<value_latitude;
+a2=value_latitude;
 }
-void GLWidget::getData_3(float value_longitude)
+void GLWidget::getData_3(float value_altitude)
 {
-    qDebug() << "odebralem 3 " <<value_longitude;
+    qDebug() <<value_altitude;
+    a3=value_altitude;
 }
-void GLWidget::getData_4(float value_altitude)
+void GLWidget::getData_4(float value_velocity)
 {
-    qDebug() << "odebralem 4 " <<value_altitude;
+    qDebug() <<value_velocity;
+    a4=value_velocity;
 }
 void GLWidget::drawPath(){
 
@@ -151,7 +155,6 @@ void GLWidget::drawPath(){
 
 void GLWidget::rotateISS(){
 
-    qDebug() <<a1;
     update();
     glPushMatrix();
     glRotatef(angle, 0.0f+a2/1000.0, 0.0f+a3/1000.0, 0.0f);

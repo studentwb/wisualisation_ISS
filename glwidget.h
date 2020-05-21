@@ -34,10 +34,10 @@ private:
      void init();
      void draw();
 private slots:
-     void odbieramtest(float zamienna1);
+     void getData_1(float value_longitude);
      void getData_2(float value_latitude);
-     void getData_3(float value_longitude);
-     void getData_4(float value_altitude);
+     void getData_3(float value_altitude);
+     void getData_4(float value_velocity);
 };
 
 #endif // GLWIDGET_H

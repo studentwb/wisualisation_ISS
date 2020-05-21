@@ -34,7 +34,7 @@ private:
     QNetworkRequest request;
     QTimer *timer;
 signals:
-    void test(float a1); //przesyly danych
+    void sendData_1(float a1); //przesyly danych
     void sendData_2(float a2);
     void sendData_3(float a3);
     void sendData_4(float a4);

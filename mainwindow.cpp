@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(on_pushButton_clicked()));
     timer->start(1000);
 
-    QObject::connect(this, SIGNAL(test(float)),ui->gWindow, SLOT(odbieramtest(float)));
+    QObject::connect(this, SIGNAL(sendData_1(float)),ui->gWindow, SLOT(getData_1(float)));
     QObject::connect(this, SIGNAL(sendData_2(float)),ui->gWindow, SLOT(getData_2(float)));
     QObject::connect(this, SIGNAL(sendData_3(float)),ui->gWindow, SLOT(getData_3(float)));
     QObject::connect(this, SIGNAL(sendData_4(float)),ui->gWindow, SLOT(getData_4(float)));
@@ -59,9 +59,8 @@ void MainWindow::on_results(QNetworkReply *reply)
         QJsonObject root = document.object(); //tutaj wyciagasz ten dokument jako obiekt typu JSON
 
         double current_velocity = root.value("velocity").toDouble();
-        qDebug() <<current_velocity ;
-        //qDebug() << root.value("velocity");
-        double  current_latitude= root.value("latitude").toDouble();
+        qDebug() <<root.value("velocity");
+         double  current_latitude= root.value("latitude").toDouble();
         qDebug() << root.value("latitude");
         double  current_longitude=root.value("longitude").toDouble();
         qDebug() << root.value("longitude");
@@ -72,7 +71,7 @@ void MainWindow::on_results(QNetworkReply *reply)
         float a3=current_altitude;
         float a4=current_velocity;
 
-        emit test(a1); //wywlouje funkcje, ktora ma byc sygnalem
+        emit sendData_1(a1); //wywlouje funkcje, ktora ma byc sygnalem
         emit sendData_2(a2);
         emit sendData_3(a3);
         emit sendData_4(a4);
