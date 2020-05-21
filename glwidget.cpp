@@ -119,7 +119,7 @@ void GLWidget::draw(){
 glColor3f(   0.0,  1.0,  0.0 );
    drawSphere(0.6371, 1000, 1000); //R Earth=6371km
    glColor3f(   1.0,  0.0,  0.0 );
-   drawPath();
+   //drawPath();
    rotateISS();
 
    }
@@ -133,7 +133,7 @@ a2=value_latitude;
 }
 void GLWidget::getData_3(float value_altitude)
 {
-    qDebug() <<value_altitude;
+    qDebug() <<"a " <<value_altitude;
     a3=value_altitude;
 }
 void GLWidget::getData_4(float value_velocity)
@@ -145,11 +145,13 @@ void GLWidget::drawPath(){
 
     update();
    // glPushMatrix();
-    glRotatef(angle, 0.0f+a2/100.0, 0.0f+a3/100.0, 0.0f);
-     glTranslatef(0,0.0,0.7+(a1/1000.0));
+    glRotatef(angle, 0.0f+a1/1000.0, 0.0f+a2/1000.0, 0.0f);
+     glTranslatef(0,00.6371+(a3/1000.0),0.0);
      glColor3f(   1.0,  0.0,  0.0 );
       drawSphere(0.01, 1000, 1000);
     glPopMatrix();
+    angle +=a4/(105160);
+    if(angle==360){        angle=0;}
 
 }
 
@@ -157,12 +159,12 @@ void GLWidget::rotateISS(){
 
     update();
     glPushMatrix();
-    glRotatef(angle, 0.0f+a2/1000.0, 0.0f+a3/1000.0, 0.0f);
-     glTranslatef(0,0.0,0.0+(a1/10000.0));
-      drawISS(0.05);
+    glRotatef(angle, 0.0f+a1/1000.0, 0.0f+a2/1000.0, 0.0f);
+     glTranslatef(0, 0.6371+(a3/1000.0),0.0);
+      drawISS(0.01);
     glPopMatrix();
-    angle +=a1/(10516);
-    if(angle==360){        angle=0;}
+    angle +=a4/(105160);
+    if(angle==360){        angle=1;}
 }
 
 void GLWidget::drawSphere(double r, int lats, int longs)
