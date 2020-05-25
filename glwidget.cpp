@@ -1,6 +1,7 @@
 #include "glwidget.h"
 #include "mainwindow.h"
 #include "mainwindow.cpp"
+#include "SceneParams.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
@@ -31,10 +32,15 @@
 float a1, a2, a3, a4;
 using namespace qglviewer;
 using namespace std;
-inline double Deg2Rad(double Ang_deg)
+
+inline
+double Deg2Rad(double Ang_deg)
   { return Ang_deg*M_PI/180; }
+
+
+#define ANG_STEP_deg 10
 static GLuint Texture4Bg;
-static GLuint Texture4Earth;
+static GLuint Texture4Sphere;
 #define SLIDER2RAD(x) static_cast<float>(sin(M_PI*2*ScnParams.Get##x##_Light_deg()/180))
 #define ANG_STEP_deg 10
 
@@ -46,99 +52,103 @@ angle=0.0;
 void GLWidget::init()
 {
     restoreStateFromFile();
-    GLfloat Light1_Position[] = { 1.0, 1.0, 1.0, 0.0 };
-     glLightfv(GL_LIGHT0, GL_POSITION, Light1_Position);
 
-     glEnable(GL_LIGHTING);
-     glEnable(GL_LIGHT0);
-     glEnable(GL_DEPTH_TEST);
-Texture4Bg = SOIL_load_OGL_texture
-(
-    "/home/baron/Pobrane/WDSstacja/source/space_dust.jpg",
+      GLfloat Light1_Position[] = { 3.0, 3.0, 3.0, 0.0 };
+      glLightfv(GL_LIGHT0, GL_POSITION, Light1_Position);
+
+      glEnable(GL_LIGHTING);
+      glEnable(GL_LIGHT0);
+      glEnable(GL_DEPTH_TEST);
+
+
+      glEnable(GL_TEXTURE_2D);
+      glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+      glGenTextures(1, &Texture4Sphere);
+      glBindTexture(GL_TEXTURE_2D, Texture4Sphere);
+
+      glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+               GL_NEAREST);
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                       GL_NEAREST);
+
+
+       int width, height;
+       unsigned char* image =
+           SOIL_load_image("/home/baron/Pobrane/WDSstacja/source/earth.jpg", &width, &height, 0, SOIL_LOAD_RGB);
+
+       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+                     GL_UNSIGNED_BYTE, image);
+
+       /* Inny sposob powiazania z tekstura */
+       Texture4Bg = SOIL_load_OGL_texture(
+            "/home/baron/Pobrane/WDSstacja/source/space_dust.jpg",
             SOIL_LOAD_AUTO,
             SOIL_CREATE_NEW_ID,
-            SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MULTIPLY_ALPHA
-  );
+            SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+               );
 
+}
+void CreateBackground()
+{
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+  glBindTexture(GL_TEXTURE_2D, Texture4Bg);
 
-glEnable(GL_TEXTURE_2D);
-glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-glGenTextures(1, &Texture4Earth);
-glBindTexture(GL_TEXTURE_2D, Texture4Earth);
+   glMatrixMode(GL_MODELVIEW);
+   glPushMatrix();
 
-glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+   glLoadIdentity();
+   glDepthMask(GL_FALSE);
 
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-         GL_NEAREST);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                 GL_NEAREST);
+   glMatrixMode(GL_PROJECTION);
+   glPushMatrix();
 
+   glLoadIdentity();
+   glOrtho(0,1,1,0,-1,1);
 
-int width, height;
-unsigned char* image =
-     SOIL_load_image("/home/baron/Pobrane/WDSstacja/source/earth.jpg", &width, &height, 0, SOIL_LOAD_RGB);
-qDebug()<<"zdjedzie " <<image;
-glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
-               GL_UNSIGNED_BYTE, image);
+   glBegin(GL_QUADS);  // Tworzenie kwadratu, na którym będzie
+    glTexCoord2f(0,0); // rozpięta tekstura tła.
+    glVertex2f(0,0);
+
+    glTexCoord2f(1,0);
+    glVertex2f(1,0);
+
+    glTexCoord2f(1,1);
+    glVertex2f(1,1);
+
+    glTexCoord2f(0,1);
+    glVertex2f(0,1);
+  glEnd();
+
+  glMatrixMode(GL_PROJECTION);
+  glPopMatrix();
+
+  glMatrixMode(GL_MODELVIEW);
+  glPopMatrix();
 }
 
-
 void GLWidget::draw(){
+//    GLfloat Light1_Position[] = { 3*SLIDER2RAD(X), 3*SLIDER2RAD(Y), 3*SLIDER2RAD(Z), 0.0 };
+ GLfloat Light1_Position[] = { 1.0, 1.0, 1.0, 0.0 };
+    glLightfv(GL_LIGHT0, GL_POSITION, Light1_Position);
+
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_TEXTURE_2D);
 
-       glEnable(GL_TEXTURE_2D);
-       glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-       glBindTexture(GL_TEXTURE_2D, Texture4Bg);
+    CreateBackground();
 
-       glMatrixMode(GL_MODELVIEW);
-       glPushMatrix();
-
-       glLoadIdentity();
-       glDepthMask(GL_FALSE);
-
-       glMatrixMode(GL_PROJECTION);
-       glPushMatrix();
-
-       glLoadIdentity();
-       glOrtho(0,1,1,0,-1,1);
-
-       glBegin(GL_QUADS);  // Tworzenie kwadratu, na którym będzie
-        glTexCoord2f(0,0); // rozpięta tekstura tła.
-        glVertex2f(0,0);
-
-        glTexCoord2f(1,0);
-        glVertex2f(1,0);
-
-        glTexCoord2f(1,1);
-        glVertex2f(1,1);
-
-        glTexCoord2f(0,1);
-        glVertex2f(0,1);
-      glEnd();
-
-      glMatrixMode(GL_PROJECTION);
-      glPopMatrix();
-
-      glMatrixMode(GL_MODELVIEW);
-      glPopMatrix();
-      glDepthMask(GL_TRUE);
-
-      glDisable(GL_TEXTURE_2D);
-
-     glColor3f(0.0, 0.0, 0);
-
-
-glDepthMask(GL_TRUE);
-
-
-glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-glScalef( 0.5, 0.5, 0.5 );
-glColor3f(   1.0,  0.0,  0.0 );
-drawSphere(0.6371, 1000, 1000); //R Earth=6371km
-glColor3f(   1.0,  0.0,  0.0 );
-   //drawPath();
+    glDepthMask(GL_TRUE);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); // TMP
+    glBindTexture(GL_TEXTURE_2D, Texture4Sphere);
+//    glTranslatef( 0.0, 0.0, -1 );
+    glRotatef( 105160, 1.0, 0.0, 0 ); // Obracanie kulu wokół osi OX
+    drawSphere(0.6371);
+    glFlush();
+    glDisable(GL_TEXTURE_2D);
    rotateISS();
 
    }
@@ -146,15 +156,7 @@ glColor3f(   1.0,  0.0,  0.0 );
 
 void GLWidget::drawPath(){
 
-    update();
-   // glPushMatrix();
-    glRotatef(angle, 0.0f+a1/1000.0, 0.0f+a2/1000.0, 0.0f);
-     glTranslatef(0, 0.6371+(a3/1000.0),0.0);
-     glColor3f(   1.0,  0.0,  0.0 );
-      drawSphere(0.01, 1000, 1000);
-    glPopMatrix();
-    angle +=a4/(105160);
-    if(angle==360){        angle=0;}
+
 
 }
 
@@ -170,36 +172,54 @@ void GLWidget::rotateISS(){
     if(angle==360){        angle=1;}
 }
 
-void GLWidget::drawSphere(double r, int lats, int longs)
+void GLWidget::drawSphere(double Size)
 {
 
-    int i;
-    int j;
+    glScalef( Size, Size, Size );
 
-    glBindTexture(GL_TEXTURE_2D, Texture4Earth);
+     float   x_new_z_prev, y_new_z_prev;
+     float   x_new_z_new,  y_new_z_new;
 
-      for(i = 0; i <= lats; i++) {
-          double lat0 = PI * (-0.5 + (double) (i - 1) / lats);
-          double z0  = sin(lat0);
-          double zr0 =  cos(lat0);
 
-          double lat1 = PI * (-0.5 + (double) i / lats);
-          double z1 = sin(lat1);
-          double zr1 = cos(lat1);
+     float   z_prev = -1, z_new;
+     float   radius_prev = 0, radius_new;
+     float   sn, cs;
 
-          glBegin(GL_QUAD_STRIP);
+     glBindTexture(GL_TEXTURE_2D, Texture4Sphere);
 
-          for(j = 0; j <= longs; j++) {
-              double lng = 2 * PI * (double) (j - 1) / longs;
-              double x = cos(lng);
-              double y =sin(lng);
+     double  s_new;
+     double  t_prev = 0, t_new;
 
-              glNormal3f(x * zr0, y * zr0, z0);
-              glVertex3f(r * x * zr0, r * y * zr0, r * z0);
-              glNormal3f(x * zr1, y * zr1, z1);
-              glVertex3f(r * x * zr1, r * y * zr1, r * z1);
-          }
-          glEnd();
+     for (double Elev_deg = -90+ANG_STEP_deg; Elev_deg <= 90; Elev_deg += ANG_STEP_deg) {
+       z_new = sin(Deg2Rad(Elev_deg));
+       radius_new = cos(Deg2Rad(Elev_deg));
+
+       t_new =  (90+Elev_deg)/180;
+       sn = 0;  cs = 1;
+
+
+       glBegin(GL_QUAD_STRIP);
+       glColor3f(   1.0,  1.0,  1.0 );
+
+       for (double Azim_deg = 0; Azim_deg <= 360; Azim_deg += ANG_STEP_deg) {
+        s_new = Azim_deg/360;
+        sn = sin(Deg2Rad(Azim_deg));  cs = cos(Deg2Rad(Azim_deg));
+        x_new_z_new = radius_new*cs;
+        y_new_z_new = radius_new*sn;
+        x_new_z_prev = radius_prev*cs;
+        y_new_z_prev = radius_prev*sn;
+
+        glTexCoord2f(s_new,t_prev);
+        glNormal3f( x_new_z_prev, y_new_z_prev,  z_prev);  glVertex3f( x_new_z_prev, y_new_z_prev,  z_prev );
+        glTexCoord2f(s_new,t_new);
+        glNormal3f(x_new_z_new, y_new_z_new,  z_new);      glVertex3f( x_new_z_new, y_new_z_new,  z_new );
+       }
+
+       glEnd();
+
+      z_prev = z_new;
+      radius_prev = radius_new;
+      t_prev = t_new;
      }
 
 
@@ -220,7 +240,7 @@ void GLWidget::drawISS(double Size){
       sn = 0;  cs = 1;
 
       glBegin(GL_QUAD_STRIP);
-      glColor3f(   0.0,  0.0,  1.0 );
+      glColor3f(   1.0,  0.0,  0.0 );
 
       for (double Azim_deg = 0; Azim_deg <= 360; Azim_deg += ANG_STEP_deg) {
        sn = sin(Deg2Rad(Azim_deg));  cs = cos(Deg2Rad(Azim_deg));

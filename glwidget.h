@@ -24,7 +24,7 @@ public:
     explicit GLWidget(QWidget *parent = nullptr);
     float angle;
 
-    void drawSphere(double r, int lats, int longs);
+    void drawSphere(double Size);
     void rotateISS();
     void drawISS(double Size);
     void drawPath();
@@ -40,5 +40,8 @@ private slots:
      void getData_3(float value_altitude);
      void getData_4(float value_velocity);
 };
+
+
+
 
 #endif // GLWIDGET_H
