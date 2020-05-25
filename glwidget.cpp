@@ -4,7 +4,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-#include <math.h>
+#include <cmath>
 #include <QtOpenGL>
 #include <QtGui>
 #include <QtCore/QDebug>
@@ -34,6 +34,7 @@ using namespace std;
 inline double Deg2Rad(double Ang_deg)
   { return Ang_deg*M_PI/180; }
 static GLuint Texture4Bg;
+static GLuint Texture4Earth;
 #define SLIDER2RAD(x) static_cast<float>(sin(M_PI*2*ScnParams.Get##x##_Light_deg()/180))
 #define ANG_STEP_deg 10
 
@@ -44,10 +45,13 @@ angle=0.0;
 
 void GLWidget::init()
 {
-//GLfloat light_position[]={3.0, 3.0, 3.0, 0.0};
-restoreFromFile();
-glShadeModel(GL_FLAT);
-  glEnable(GL_DEPTH_TEST);
+    restoreStateFromFile();
+    GLfloat Light1_Position[] = { 1.0, 1.0, 1.0, 0.0 };
+     glLightfv(GL_LIGHT0, GL_POSITION, Light1_Position);
+
+     glEnable(GL_LIGHTING);
+     glEnable(GL_LIGHT0);
+     glEnable(GL_DEPTH_TEST);
 Texture4Bg = SOIL_load_OGL_texture
 (
     "/home/baron/Pobrane/WDSstacja/source/space_dust.jpg",
@@ -55,12 +59,29 @@ Texture4Bg = SOIL_load_OGL_texture
             SOIL_CREATE_NEW_ID,
             SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MULTIPLY_ALPHA
   );
+
+
+glEnable(GL_TEXTURE_2D);
+glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+glGenTextures(1, &Texture4Earth);
+glBindTexture(GL_TEXTURE_2D, Texture4Earth);
+
+glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-               GL_NEAREST);
+         GL_NEAREST);
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-               GL_NEAREST);
+                 GL_NEAREST);
+
+
+int width, height;
+unsigned char* image =
+     SOIL_load_image("/home/baron/Pobrane/WDSstacja/source/earth.jpg", &width, &height, 0, SOIL_LOAD_RGB);
+qDebug()<<"zdjedzie " <<image;
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+               GL_UNSIGNED_BYTE, image);
 }
 
 
@@ -109,33 +130,20 @@ void GLWidget::draw(){
      glColor3f(0.0, 0.0, 0);
 
 
-    // glViewport(0, 0, 470, 470);
-//    gluLookAt(0,0.8,-1,0,0,0,0,2,0);
-glColor3f(   0.0,  1.0,  0.0 );
-   drawSphere(0.6371, 1000, 1000); //R Earth=6371km
-   glColor3f(   1.0,  0.0,  0.0 );
+glDepthMask(GL_TRUE);
+
+
+glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+glScalef( 0.5, 0.5, 0.5 );
+glColor3f(   1.0,  0.0,  0.0 );
+drawSphere(0.6371, 1000, 1000); //R Earth=6371km
+glColor3f(   1.0,  0.0,  0.0 );
    //drawPath();
    rotateISS();
 
    }
-void GLWidget::getData_1(float value_longitude){
-    qDebug() <<value_longitude;
-    a1=value_longitude;
-}
-void GLWidget::getData_2(float value_latitude){
-qDebug() <<value_latitude;
-a2=value_latitude;
-}
-void GLWidget::getData_3(float value_altitude)
-{
-    qDebug() <<value_altitude;
-    a3=value_altitude;
-}
-void GLWidget::getData_4(float value_velocity)
-{
-    qDebug() <<value_velocity;
-    a4=value_velocity;
-}
+
+
 void GLWidget::drawPath(){
 
     update();
@@ -167,6 +175,9 @@ void GLWidget::drawSphere(double r, int lats, int longs)
 
     int i;
     int j;
+
+    glBindTexture(GL_TEXTURE_2D, Texture4Earth);
+
       for(i = 0; i <= lats; i++) {
           double lat0 = PI * (-0.5 + (double) (i - 1) / lats);
           double z0  = sin(lat0);
@@ -191,26 +202,7 @@ void GLWidget::drawSphere(double r, int lats, int longs)
           glEnd();
      }
 
-    /*
 
-    // Sphere shape data
-      Qt3DExtras::QSphereMesh *sphereMesh = new Qt3DExtras::QSphereMesh();
-      sphereMesh->setRings(32);
-      sphereMesh->setSlices(32);
-      sphereMesh->setRadius(4);
-
-      // Sphere mesh transform
-      Qt3DCore::QTransform *sphereTransform = new Qt3DCore::QTransform();
-      sphereTransform->setScale(1.0f);
-      sphereTransform->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
-      sphereTransform->setRotation(QQuaternion(1.0f, 0.0f, 0.0f, 0.0f));
-
-      Qt3DExtras::QPhongMaterial *sphereMaterial = new Qt3DExtras::QPhongMaterial();
-      sphereMaterial->setDiffuse(QColor(QRgb(0xA69929)));
-
-      // Sphere
-      m_sphereEntity = new Qt3DCore::QEntity(m_rootEntity);
-      m_sphereEntity->addComponent(sphereMesh);*/
 }
 void GLWidget::drawISS(double Size){
 
@@ -247,3 +239,23 @@ glEnd();
       glEnd();
 
 }
+
+void GLWidget::getData_1(float value_longitude){
+    qDebug() <<value_longitude;
+    a1=value_longitude;
+}
+void GLWidget::getData_2(float value_latitude){
+qDebug() <<value_latitude;
+a2=value_latitude;
+}
+void GLWidget::getData_3(float value_altitude)
+{
+    qDebug() <<value_altitude;
+    a3=value_altitude;
+}
+void GLWidget::getData_4(float value_velocity)
+{
+    qDebug() <<value_velocity;
+    a4=value_velocity;
+}
+

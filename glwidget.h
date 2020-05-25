@@ -28,9 +28,10 @@ public:
     void rotateISS();
     void drawISS(double Size);
     void drawPath();
+
 private:
     void makeObject();
-   protected:
+protected:
      void init();
      void draw();
 private slots:
