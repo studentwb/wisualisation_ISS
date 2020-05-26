@@ -27,7 +27,7 @@
 #include <QMouseEvent>
 #include <unistd.h>
 #include <QDebug>
-#include <vector>
+//#include <vector>
 float a1, a2, a3, a4;
 using namespace qglviewer;
 using namespace std;
@@ -152,7 +152,7 @@ GLfloat Light1_Position[]={-1.0, 1.0, -1.0, 0.0};
     glFlush();
     glDisable(GL_TEXTURE_2D);
 drawPath();
- rotateISS();
+ //rotateISS();
    }
 
 
