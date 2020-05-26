@@ -4,7 +4,6 @@
 #include "SceneParams.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GL/glut.h>
 #include <cmath>
 #include <QtOpenGL>
 #include <QtGui>
@@ -12,7 +11,6 @@
 #include <Qt3DExtras/QSphereMesh>
 #include <QGLViewer/qglviewer.h>
 #include <QtGui/QImage>
-//#include <GLFW/glfw3.h>
 #include <QSurfaceFormat>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLTexture>
@@ -29,6 +27,7 @@
 #include <QMouseEvent>
 #include <unistd.h>
 #include <QDebug>
+#include <vector>
 float a1, a2, a3, a4;
 using namespace qglviewer;
 using namespace std;
@@ -131,8 +130,8 @@ void CreateBackground()
 }
 
 void GLWidget::draw(){
-//    GLfloat Light1_Position[] = { 3*SLIDER2RAD(X), 3*SLIDER2RAD(Y), 3*SLIDER2RAD(Z), 0.0 };
- GLfloat Light1_Position[] = { 1.0, 1.0, 1.0, 0.0 };
+   // GLfloat Light1_Position[] = { 3*SLIDER2RAD(X), 3*SLIDER2RAD(Y), 3*SLIDER2RAD(Z), 0.0 };
+GLfloat Light1_Position[]={-1.0, 1.0, -1.0, 0.0};
     glLightfv(GL_LIGHT0, GL_POSITION, Light1_Position);
 
 
@@ -144,20 +143,36 @@ void GLWidget::draw(){
     glDepthMask(GL_TRUE);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); // TMP
     glBindTexture(GL_TEXTURE_2D, Texture4Sphere);
-//    glTranslatef( 0.0, 0.0, -1 );
+
     glRotatef( 105160, 1.0, 0.0, 0 ); // Obracanie kulu wokół osi OX
-    drawSphere(0.6371);
+   // drawSphere(0.6371);
     glFlush();
     glDisable(GL_TEXTURE_2D);
    rotateISS();
-
+drawPath();
    }
 
 
 void GLWidget::drawPath(){
-
-
-
+        float a11, a22, a33;
+        int i=0;
+    a11=a1/1000.0;
+    a22=a2/1000.0;
+    a33=0.6371+(a3/1000.0);
+    vector<float> vectorA;
+    vectorA.push_back(a11);
+    vector<float> vectorB;
+    vectorB.push_back(a22);
+    vector<float> vectorC;
+    vectorC.push_back(a33);
+     qDebug()<<vectorA[0]<< " "<<vectorC[0] <<" "<<vectorB[0];
+    glLineWidth(5);
+    glBegin(GL_LINE_STRIP);
+   glColor3f(   1.0,  0.0,  0.0 );
+    glVertex3f( 0.0f, 0.0f, 0.0f);
+      glVertex3f(vectorB[0], vectorC[0], vectorA[0]);
+    glEnd();
+    i+=1;
 }
 
 void GLWidget::rotateISS(){
@@ -168,7 +183,7 @@ void GLWidget::rotateISS(){
      glTranslatef(0, 0.6371+(a3/1000.0),0.0);
       drawISS(0.01);
     glPopMatrix();
-    angle +=a4/(105160);
+    angle +=a4/(10516000);
     if(angle==360){        angle=1;}
 }
 
@@ -261,21 +276,21 @@ glEnd();
 }
 
 void GLWidget::getData_1(float value_longitude){
-    qDebug() <<value_longitude;
+  //  qDebug() <<value_longitude;
     a1=value_longitude;
 }
 void GLWidget::getData_2(float value_latitude){
-qDebug() <<value_latitude;
+//qDebug() <<value_latitude;
 a2=value_latitude;
 }
 void GLWidget::getData_3(float value_altitude)
 {
-    qDebug() <<value_altitude;
+  //  qDebug() <<value_altitude;
     a3=value_altitude;
 }
 void GLWidget::getData_4(float value_velocity)
 {
-    qDebug() <<value_velocity;
+  //  qDebug() <<value_velocity;
     a4=value_velocity;
 }
 
