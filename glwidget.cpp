@@ -31,7 +31,10 @@
 float a1, a2, a3, a4;
 using namespace qglviewer;
 using namespace std;
-
+QList<float> vectorA={0.0};
+QList<float> vectorB={0.0};
+QList<float> vectorC={0.0};
+int i=0;
 inline
 double Deg2Rad(double Ang_deg)
   { return Ang_deg*M_PI/180; }
@@ -145,46 +148,49 @@ GLfloat Light1_Position[]={-1.0, 1.0, -1.0, 0.0};
     glBindTexture(GL_TEXTURE_2D, Texture4Sphere);
 
     glRotatef( 105160, 1.0, 0.0, 0 ); // Obracanie kulu wokół osi OX
-   // drawSphere(0.6371);
+   drawSphere(0.6371);
     glFlush();
     glDisable(GL_TEXTURE_2D);
-   rotateISS();
 drawPath();
+ rotateISS();
    }
 
 
 void GLWidget::drawPath(){
-        float a11, a22, a33;
-        int i=0;
-    a11=a1/1000.0;
-    a22=a2/1000.0;
-    a33=0.6371+(a3/1000.0);
-    vector<float> vectorA;
-    vectorA.push_back(a11);
-    vector<float> vectorB;
-    vectorB.push_back(a22);
-    vector<float> vectorC;
-    vectorC.push_back(a33);
-     qDebug()<<vectorA[0]<< " "<<vectorC[0] <<" "<<vectorB[0];
-    glLineWidth(5);
-    glBegin(GL_LINE_STRIP);
-   glColor3f(   1.0,  0.0,  0.0 );
-    glVertex3f( 0.0f, 0.0f, 0.0f);
-      glVertex3f(vectorB[0], vectorC[0], vectorA[0]);
+dataPath();
+     glPointSize(5);
+    glBegin(GL_POINTS);
+    glColor3f(   1.0,  0.0,  0.0 );
+    // glPushMatrix();
+    glVertex3f(vectorB[vectorB.size()-1], vectorC[vectorC.size()-1], vectorA[vectorA.size()-1]);
+    glPopMatrix();
     glEnd();
-    i+=1;
+}
+void GLWidget::dataPath(){
+
+    float a11, a22, a33;
+    a11=a1/1000;
+    a22=a2/1000;
+    a33=0.6371+(a3/1000);
+    vectorA.push_back(a11);
+    vectorB.push_back(a22);
+    vectorC.push_back(a33);
+
+     qDebug()<<vectorA[vectorA.size()-1]<< " "<<vectorC[vectorC.size()-1]<<" "<<vectorB[vectorB.size()-1]<<" "<<a22<<endl<<endl;
+
 }
 
 void GLWidget::rotateISS(){
 
     update();
     glPushMatrix();
-    glRotatef(angle, 0.0f+a1/1000.0, 0.0f+a2/1000.0, 0.0f);
-     glTranslatef(0, 0.6371+(a3/1000.0),0.0);
+    //glRotatef(angle, 0.0f+a1/1000.0, 0.0f+a2/1000.0, 0.0f);
+    glTranslatef(a1/1000.0, 0.6371+(a3/1000.0),a2/1000.0);
       drawISS(0.01);
     glPopMatrix();
     angle +=a4/(10516000);
     if(angle==360){        angle=1;}
+    glEnd();
 }
 
 void GLWidget::drawSphere(double Size)

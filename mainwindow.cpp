@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     mManager->get(QNetworkRequest(QUrl("https://api.wheretheiss.at/v1/satellites/25544")));
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(on_pushButton_clicked()));
     timer->start(1000);
-
     QObject::connect(this, SIGNAL(sendData_1(float)),ui->gWindow, SLOT(getData_1(float)));
     QObject::connect(this, SIGNAL(sendData_2(float)),ui->gWindow, SLOT(getData_2(float)));
     QObject::connect(this, SIGNAL(sendData_3(float)),ui->gWindow, SLOT(getData_3(float)));

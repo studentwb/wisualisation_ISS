@@ -28,7 +28,7 @@ public:
     void rotateISS();
     void drawISS(double Size);
     void drawPath();
-
+    void dataPath();
 private:
     void makeObject();
 protected:
