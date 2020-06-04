@@ -33,6 +33,10 @@
 #include <Qt3DExtras/qfirstpersoncameracontroller.h>
 #include <QApplication>
 /**************************************************************************************************************
+ * Aplikacja wizualizuje Miedzynarodowa stacje kosmiczna (ISS) przy uzyciu jezyka programowania c++
+ * oraz framework'u qt
+ *
+ *
  **************************************************************************************************************/
 
 int main(int argc, char *argv[])

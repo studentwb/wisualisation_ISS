@@ -39,9 +39,6 @@ int i=0;
 inline
 double Deg2Rad(double Ang_deg)
   { return Ang_deg*M_PI/180; }
-
-
-#define ANG_STEP_deg 10
 static GLuint Texture4Bg;
 static GLuint Texture4Sphere;
 #define SLIDER2RAD(x) static_cast<float>(sin(M_PI*2*ScnParams.Get##x##_Light_deg()/180))
@@ -149,11 +146,11 @@ GLfloat Light1_Position[]={1.0, 1.0, 1.0, 0.0};
     glBindTexture(GL_TEXTURE_2D, Texture4Sphere);
 
     glRotatef( 105160, 1.0, 0.0, 0 ); // Obracanie kulu wokół osi OX
-   drawSphere(0.6371);
+    drawSphere(0.6371);
     glFlush();
     glDisable(GL_TEXTURE_2D);
-drawPath();
- rotateISS();
+    drawPath();
+    rotateISS();
    }
 
 
@@ -161,12 +158,16 @@ void GLWidget::drawPath(){
         dataPath();
         glPointSize(5);
         glBegin(GL_POINTS);
-        glColor3f(   1.0,  1.0,  1.0 );
         glPushMatrix();
+        glVertex3f(vectorA[i], vectorB[i], vectorC[i]);
+        /// SPrawdza czy tablice nie są puste \n
+        /// jeżeli są puste to nie generują się koljen punkty, które odpowiadają za ścieżkę
         if(vectorA.size()!=0 || vectorB.size()!=0 || vectorC.size()!=0){
         for(i=(vectorA.size()/100); i<vectorA.size(); ++i){
-                 glVertex3f(vectorA[i], vectorC[i], vectorB[i]);
-                 qDebug()<<"dziala"<<i<<" "<< vectorA.size();
+
+                 glVertex3f(vectorA[i], vectorB[i], vectorC[i]);
+                 if(i%1000==0)
+                 qDebug()<<vectorA[i]<< vectorB[i]<< vectorC[i];
 
         }
         }
@@ -175,29 +176,30 @@ void GLWidget::drawPath(){
 }
 void GLWidget::dataPath(){
 
-    float a11, a22, a33;
-    a11=a1/1000;
-    a22=a2/1000;
-    a33=0.6371+(a3/1000);
+    GLfloat a11, a22, a33;
+    a11=a3/1500+0.6371*cos(Deg2Rad(a1));
+    a22=a3/1500+0.6371*sin(Deg2Rad(a1));
+    a33=a3/1500+0.6371*cos(Deg2Rad(a2));
     vectorA.push_back(a11);
     vectorB.push_back(a22);
     vectorC.push_back(a33);
-
-    // qDebug()<<vectorA[vectorA.size()-1]<< " "<<vectorC[vectorC.size()-1]<<" "<<vectorB[vectorB.size()-1]<<" "<<a22<<endl<<endl;
+ //   qDebug()<<a1<<a2<<a3<<"|"<<a11<<a22<<a33<<"|"<<cos((a2))<<sin(Deg2Rad(a2))<<cos(Deg2Rad(a2));
 
 }
 
 void GLWidget::rotateISS(){
+     GLfloat a111, a222, a333;
+     a111=a3/1500+0.6371*cos(Deg2Rad(a1));
+     a222=a3/1500+0.6371*sin(Deg2Rad(a1));
+     a333=a3/1500+0.6371*cos(Deg2Rad(a2));
+     update();
+     glPushMatrix();
+     glTranslatef( a111, a222, a333);
+     drawISS(0.01);
+     glPopMatrix();
+     angle +=a4/(10516000);
+     if(angle==360){        angle=1;}
 
-    update();
-    glPushMatrix();
-    //glRotatef(angle, 0.0f+a1/1000.0, 0.0f+a2/1000.0, 0.0f);
-    glTranslatef( a1/1000.0, 0.6371+(a3/1000.0),a2/1000.0);
-      drawISS(0.01);
-    glPopMatrix();
-    angle +=a4/(10516000);
-    if(angle==360){        angle=1;}
-    glEnd();
 }
 
 void GLWidget::drawSphere(double Size)
@@ -207,8 +209,6 @@ void GLWidget::drawSphere(double Size)
 
      float   x_new_z_prev, y_new_z_prev;
      float   x_new_z_new,  y_new_z_new;
-
-
      float   z_prev = -1, z_new;
      float   radius_prev = 0, radius_new;
      float   sn, cs;
@@ -293,6 +293,7 @@ glEnd();
 void GLWidget::getData_1(float value_longitude){
   //  qDebug() <<value_longitude;
     a1=value_longitude;
+
 }
 void GLWidget::getData_2(float value_latitude){
 //qDebug() <<value_latitude;
