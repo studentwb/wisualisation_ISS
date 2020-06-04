@@ -106,7 +106,9 @@ void MainWindow::on_results(QNetworkReply *reply)
 
                 }
 
-
+else{
+                ui->lineEdit_5->setReadOnly(true);
+                ui->lineEdit_5->setText(" ");}
     }
 }
 

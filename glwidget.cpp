@@ -27,13 +27,14 @@
 #include <QMouseEvent>
 #include <unistd.h>
 #include <QDebug>
-//#include <vector>
+#include <QList>
 float a1, a2, a3, a4;
 using namespace qglviewer;
 using namespace std;
 QList<float> vectorA={0.0};
 QList<float> vectorB={0.0};
 QList<float> vectorC={0.0};
+int sizeA=0;
 int i=0;
 inline
 double Deg2Rad(double Ang_deg)
@@ -134,7 +135,7 @@ void CreateBackground()
 
 void GLWidget::draw(){
    // GLfloat Light1_Position[] = { 3*SLIDER2RAD(X), 3*SLIDER2RAD(Y), 3*SLIDER2RAD(Z), 0.0 };
-GLfloat Light1_Position[]={-1.0, 1.0, -1.0, 0.0};
+GLfloat Light1_Position[]={1.0, 1.0, 1.0, 0.0};
     glLightfv(GL_LIGHT0, GL_POSITION, Light1_Position);
 
 
@@ -152,19 +153,25 @@ GLfloat Light1_Position[]={-1.0, 1.0, -1.0, 0.0};
     glFlush();
     glDisable(GL_TEXTURE_2D);
 drawPath();
- //rotateISS();
+ rotateISS();
    }
 
 
 void GLWidget::drawPath(){
-dataPath();
-     glPointSize(5);
-    glBegin(GL_POINTS);
-    glColor3f(   1.0,  0.0,  0.0 );
-    // glPushMatrix();
-    glVertex3f(vectorB[vectorB.size()-1], vectorC[vectorC.size()-1], vectorA[vectorA.size()-1]);
-    glPopMatrix();
-    glEnd();
+        dataPath();
+        glPointSize(5);
+        glBegin(GL_POINTS);
+        glColor3f(   1.0,  1.0,  1.0 );
+        glPushMatrix();
+        if(vectorA.size()!=0 || vectorB.size()!=0 || vectorC.size()!=0){
+        for(i=(vectorA.size()/100); i<vectorA.size(); ++i){
+                 glVertex3f(vectorA[i], vectorC[i], vectorB[i]);
+                 qDebug()<<"dziala"<<i<<" "<< vectorA.size();
+
+        }
+        }
+        glEnd();
+           glPopMatrix();
 }
 void GLWidget::dataPath(){
 
@@ -176,7 +183,7 @@ void GLWidget::dataPath(){
     vectorB.push_back(a22);
     vectorC.push_back(a33);
 
-     qDebug()<<vectorA[vectorA.size()-1]<< " "<<vectorC[vectorC.size()-1]<<" "<<vectorB[vectorB.size()-1]<<" "<<a22<<endl<<endl;
+    // qDebug()<<vectorA[vectorA.size()-1]<< " "<<vectorC[vectorC.size()-1]<<" "<<vectorB[vectorB.size()-1]<<" "<<a22<<endl<<endl;
 
 }
 
@@ -185,7 +192,7 @@ void GLWidget::rotateISS(){
     update();
     glPushMatrix();
     //glRotatef(angle, 0.0f+a1/1000.0, 0.0f+a2/1000.0, 0.0f);
-    glTranslatef(a1/1000.0, 0.6371+(a3/1000.0),a2/1000.0);
+    glTranslatef( a1/1000.0, 0.6371+(a3/1000.0),a2/1000.0);
       drawISS(0.01);
     glPopMatrix();
     angle +=a4/(10516000);
@@ -273,6 +280,8 @@ void GLWidget::drawISS(double Size){
       }
 glEnd();
       glBegin( GL_QUADS ); // Rysujemy kwadraty
+      glColor3f(   1.0,  0.0,  0.0 );
+
        glVertex3f( 0.0f, - 5.0f, 5.0f ); // górny lewy
        glVertex3f( 0.0f , 5.0f, 5.0f); // górny prawy git
        glVertex3f( 0.0f, 5.0f, -0.1f); // dolny prawy
