@@ -151,19 +151,19 @@ GLfloat Light1_Position[]={1.0, 1.0, 1.0, 0.0};
     glDisable(GL_TEXTURE_2D);
     drawPath();
     rotateISS();
-    drawAxis(1.1);
+  //  drawAxis(1.1);
    }
 
 
 void GLWidget::drawPath(){
         dataPath();
-        glPointSize(5);
+        glPointSize(2);
         glBegin(GL_POINTS);
         glPushMatrix();
         /// SPrawdza czy tablice nie są puste \n
         /// jeżeli są puste to nie generują się koljen punkty, które odpowiadają za ścieżkę
         if(vectorA.size()!=0 || vectorB.size()!=0 || vectorC.size()!=0){
-        for(i=(vectorA.size()/100); i<vectorA.size(); ++i){
+        for(i=(vectorA.size()/10); i<vectorA.size(); ++i){
 
                  glVertex3f(vectorA[i], vectorB[i], vectorC[i]);
                 // if(i%1000==0)

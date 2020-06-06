@@ -32,12 +32,10 @@
 #include <Qt3DExtras/qt3dwindow.h>
 #include <Qt3DExtras/qfirstpersoncameracontroller.h>
 #include <QApplication>
-/**************************************************************************************************************
- * Aplikacja wizualizuje Miedzynarodowa stacje kosmiczna (ISS) przy uzyciu jezyka programowania c++
- * oraz framework'u qt
- *
- *
- **************************************************************************************************************/
+/*! \mainpage Dokumentacja aplikacji Wizualizacja ISS
+ * \section Wprowadzenie
+ * Dokumentacja została wygenerowana za pomocą aplikacji Doxygen.
+ */
 
 int main(int argc, char *argv[])
 {
