@@ -1,5 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+/*!
+ * \file
+ * \brief
+ *
+ * Plik zawiera definicję klasy MainWindow, ktora odpowiada
+ * za pobieranie danych z API oraz obsługę sygnalow i slotow.
+ *
+ */
 #include <glwidget.h>
 #include <QMainWindow>
 #include <QJsonDocument>
@@ -23,8 +31,18 @@ public:
     ~MainWindow();
 
 private slots:
-
+    /*!
+     * \file
+     * \brief on_pushButton_clicked
+     * odpowiada za odswiezanie aplikacji w przypadku bledow
+     *
+     */
     void on_pushButton_clicked();
+    /*!
+     * \brief on_results
+     * \param reply- sprawdza czy polaczenie jest aktywne i nie wystapppil blad
+     * Pobiera dane z API, dzieki czemu aplikacja moze dzialac i przetwarzac dane
+     */
     void on_results(QNetworkReply *reply);
 
 

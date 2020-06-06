@@ -145,12 +145,13 @@ GLfloat Light1_Position[]={1.0, 1.0, 1.0, 0.0};
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); // TMP
     glBindTexture(GL_TEXTURE_2D, Texture4Sphere);
 
-    glRotatef( 105160, 1.0, 0.0, 0 ); // Obracanie kulu wokół osi OX
+
     drawSphere(0.6371);
     glFlush();
     glDisable(GL_TEXTURE_2D);
     drawPath();
     rotateISS();
+    drawAxis(1.1);
    }
 
 
@@ -159,15 +160,14 @@ void GLWidget::drawPath(){
         glPointSize(5);
         glBegin(GL_POINTS);
         glPushMatrix();
-        glVertex3f(vectorA[i], vectorB[i], vectorC[i]);
         /// SPrawdza czy tablice nie są puste \n
         /// jeżeli są puste to nie generują się koljen punkty, które odpowiadają za ścieżkę
         if(vectorA.size()!=0 || vectorB.size()!=0 || vectorC.size()!=0){
         for(i=(vectorA.size()/100); i<vectorA.size(); ++i){
 
                  glVertex3f(vectorA[i], vectorB[i], vectorC[i]);
-                 if(i%1000==0)
-                 qDebug()<<vectorA[i]<< vectorB[i]<< vectorC[i];
+                // if(i%1000==0)
+                 //qDebug()<<vectorA[i]<< vectorB[i]<< vectorC[i];
 
         }
         }
@@ -177,23 +177,24 @@ void GLWidget::drawPath(){
 void GLWidget::dataPath(){
 
     GLfloat a11, a22, a33;
-    a11=a3/1500+0.6371*cos(Deg2Rad(a1));
-    a22=a3/1500+0.6371*sin(Deg2Rad(a1));
-    a33=a3/1500+0.6371*cos(Deg2Rad(a2));
+    a11=1.2*sin(Deg2Rad(a1));
+    a22=1.2*sin(Deg2Rad(a2));
+    a33=1.2*cos(Deg2Rad(a1));
     vectorA.push_back(a11);
     vectorB.push_back(a22);
     vectorC.push_back(a33);
- //   qDebug()<<a1<<a2<<a3<<"|"<<a11<<a22<<a33<<"|"<<cos((a2))<<sin(Deg2Rad(a2))<<cos(Deg2Rad(a2));
+    qDebug()<<a1<<a2<<"|"<<a11<<a22<<a33<<"|"<<Deg2Rad(a1)<<Deg2Rad(a2);
 
 }
 
 void GLWidget::rotateISS(){
      GLfloat a111, a222, a333;
-     a111=a3/1500+0.6371*cos(Deg2Rad(a1));
-     a222=a3/1500+0.6371*sin(Deg2Rad(a1));
-     a333=a3/1500+0.6371*cos(Deg2Rad(a2));
+     a111=1.2*sin(Deg2Rad(a1));
+     a222=1.2*sin(Deg2Rad(a2));
+     a333=1.2*cos(Deg2Rad(a1));
      update();
      glPushMatrix();
+
      glTranslatef( a111, a222, a333);
      drawISS(0.01);
      glPopMatrix();
