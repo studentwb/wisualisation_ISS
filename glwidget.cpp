@@ -157,7 +157,7 @@ GLfloat Light1_Position[]={1.0, 1.0, 1.0, 0.0};
 void GLWidget::drawPath(){
         dataPath();
         glPointSize(3);
-        glBegin(GL_LINES);
+        glBegin(GL_LINE_STRIP);
         glPushMatrix();
         /// SPrawdza czy tablice nie są puste \n
         /// jeżeli są puste to nie generują się koljen punkty, które odpowiadają za ścieżkę
@@ -170,7 +170,9 @@ void GLWidget::drawPath(){
                 glVertex3f(vectorA[i-1], vectorB[i-1], vectorC[i-1]);
                 glVertex3f(vectorA[i], vectorB[i], vectorC[i]);}
                  qDebug()<<vectorA.size()<< vectorB[i]<< vectorC[i];
-
+glEnd();
+glBegin(GL_POINTS);
+                 glVertex3f(vectorA[i], vectorB[i], vectorC[i]);
         }
         }
         glEnd();
