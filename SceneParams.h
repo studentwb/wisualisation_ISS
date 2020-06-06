@@ -1,6 +1,11 @@
 #ifndef SCENEPARAMS_H
 #define SCENEPARAMS_H
 
+/*!
+ * \brief SceneParams
+ * Klasa odpowiada za ustawienia prametrow sceny, na ktorej rozkladane jest tlo
+ */
+
 class SceneParams {
   double  _AngleX_deg;
 

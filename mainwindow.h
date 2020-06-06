@@ -20,12 +20,23 @@
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+/*!
+ * \brief Klasa MainWindow
+ * Klasa zawiera w sobie dane o aktualnej pogodzie, oraz funkcję przetwarzająca
+ * odpowiedź WeatherAPI.
+ */
 
+
+/*!
+ * \brief Klasa MainWindow
+ * Klasa dziedzicząca QMainWindow stanowiąca główne okno aplikacji.
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
