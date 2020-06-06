@@ -130,7 +130,7 @@ void CreateBackground()
 }
 
 void GLWidget::draw(){
-   // GLfloat Light1_Position[] = { 3*SLIDER2RAD(X), 3*SLIDER2RAD(Y), 3*SLIDER2RAD(Z), 0.0 };
+
 GLfloat Light1_Position[]={1.0, 1.0, 1.0, 0.0};
     glLightfv(GL_LIGHT0, GL_POSITION, Light1_Position);
 
