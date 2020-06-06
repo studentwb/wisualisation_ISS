@@ -1,10 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 /*!
- * \file
- * \brief
  *
- * Plik zawiera definicję klasy MainWindow, ktora odpowiada
+ * \brief Klasa mainwindow
+ * Zawiera definicję klasy MainWindow, ktora odpowiada
  * za pobieranie danych z API oraz obsługę sygnalow i slotow.
  *
  */
