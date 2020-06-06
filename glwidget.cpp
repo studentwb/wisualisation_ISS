@@ -32,7 +32,6 @@ using namespace std;
 QList<float> vectorA={0.0, 0.1};
 QList<float> vectorB={0.0, 0.1};
 QList<float> vectorC={0.0, 0.1};
-int sizeA=0;
 int i=0;
 inline
 double Deg2Rad(double Ang_deg)
