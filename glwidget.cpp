@@ -185,9 +185,7 @@ void GLWidget::dataPath(){
     vectorA.push_back(a11);
     vectorB.push_back(a22);
     vectorC.push_back(a33);
-   // qDebug()<<a1<<a2<<"|"<<a11<<a22<<a33<<"|"<<Deg2Rad(a1)<<Deg2Rad(a2);
-
-}
+  }
 
 void GLWidget::rotateISS(){
      GLfloat a111, a222, a333;
@@ -294,22 +292,17 @@ glEnd();
 }
 
 void GLWidget::getData_1(float value_longitude){
-  //  qDebug() <<value_longitude;
     a1=value_longitude;
-
 }
 void GLWidget::getData_2(float value_latitude){
-//qDebug() <<value_latitude;
-a2=value_latitude;
+    a2=value_latitude;
 }
 void GLWidget::getData_3(float value_altitude)
 {
-  //  qDebug() <<value_altitude;
     a3=value_altitude;
 }
 void GLWidget::getData_4(float value_velocity)
 {
-  //  qDebug() <<value_velocity;
     a4=value_velocity;
 }
 
