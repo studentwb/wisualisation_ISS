@@ -1,6 +1,6 @@
 #include "dataiss.h"
 
-//tutaj będą przetwarzane dane pobrane z API
+//Kontynuacja projektu po zaliczeniu kursu
 
 dataISS::dataISS(QObject *parent) : QObject(parent)
 {
