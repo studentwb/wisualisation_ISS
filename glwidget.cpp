@@ -8,7 +8,6 @@
 #include <QtOpenGL>
 #include <QtGui>
 #include <QtCore/QDebug>
-#include <Qt3DExtras/QSphereMesh>
 #include <QGLViewer/qglviewer.h>
 #include <QtGui/QImage>
 #include <QSurfaceFormat>
@@ -31,9 +30,9 @@
 float a1, a2, a3, a4;
 using namespace qglviewer;
 using namespace std;
-QList<float> vectorA={0.0};
-QList<float> vectorB={0.0};
-QList<float> vectorC={0.0};
+QList<float> vectorA={0.0, 0.1};
+QList<float> vectorB={0.0, 0.1};
+QList<float> vectorC={0.0, 0.1};
 int sizeA=0;
 int i=0;
 inline
@@ -157,17 +156,20 @@ GLfloat Light1_Position[]={1.0, 1.0, 1.0, 0.0};
 
 void GLWidget::drawPath(){
         dataPath();
-        glPointSize(2);
-        glBegin(GL_POINTS);
+        glPointSize(3);
+        glBegin(GL_LINES);
         glPushMatrix();
         /// SPrawdza czy tablice nie są puste \n
         /// jeżeli są puste to nie generują się koljen punkty, które odpowiadają za ścieżkę
         if(vectorA.size()!=0 || vectorB.size()!=0 || vectorC.size()!=0){
         for(i=(vectorA.size()/10); i<vectorA.size(); ++i){
-
-                 glVertex3f(vectorA[i], vectorB[i], vectorC[i]);
-                // if(i%1000==0)
-                 //qDebug()<<vectorA[i]<< vectorB[i]<< vectorC[i];
+            if(i<=1){
+                 glVertex3f(vectorA[0], vectorB[0], vectorC[0]);
+                 glVertex3f(vectorA[1], vectorB[1], vectorC[1]);}
+            else{
+                glVertex3f(vectorA[i-1], vectorB[i-1], vectorC[i-1]);
+                glVertex3f(vectorA[i], vectorB[i], vectorC[i]);}
+                 qDebug()<<vectorA.size()<< vectorB[i]<< vectorC[i];
 
         }
         }
@@ -183,7 +185,7 @@ void GLWidget::dataPath(){
     vectorA.push_back(a11);
     vectorB.push_back(a22);
     vectorC.push_back(a33);
-    qDebug()<<a1<<a2<<"|"<<a11<<a22<<a33<<"|"<<Deg2Rad(a1)<<Deg2Rad(a2);
+   // qDebug()<<a1<<a2<<"|"<<a11<<a22<<a33<<"|"<<Deg2Rad(a1)<<Deg2Rad(a2);
 
 }
 
