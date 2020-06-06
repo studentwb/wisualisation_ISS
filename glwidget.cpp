@@ -13,7 +13,6 @@
 #include <QSurfaceFormat>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLTexture>
-#include <QMouseEvent>
 #include <QTextureImage>
 #include <Qt3DExtras/QCuboidMesh>
 #include <SOIL/SOIL.h>

@@ -58,13 +58,10 @@ void MainWindow::on_results(QNetworkReply *reply)
         QJsonObject root = document.object(); //tutaj wyciagasz ten dokument jako obiekt typu JSON
 
         double current_velocity = root.value("velocity").toDouble();
-//        qDebug() <<root.value("velocity");
-         double  current_latitude= root.value("latitude").toDouble();
-//        qDebug() << root.value("latitude");
+        double  current_latitude= root.value("latitude").toDouble();
         double  current_longitude=root.value("longitude").toDouble();
-//        qDebug() << root.value("longitude");
         double current_altitude=root.value("altitude").toDouble();
-//        qDebug() << root.value("altitude");
+
         float a1=current_longitude;
         float a2=current_latitude;
         float a3=current_altitude;
