@@ -3,7 +3,7 @@
 
 /*!
  * \brief SceneParams
- * Klasa odpowiada za ustawienia prametrow sceny, na ktorej rozkladane jest tlo
+ * Klasa odpowiada za ustawienia prametrów sceny, na której rozkładane jest tło
  */
 
 class SceneParams {

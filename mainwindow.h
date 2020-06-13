@@ -22,8 +22,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 /*!
  * \brief Klasa MainWindow
- * Klasa zawiera w sobie dane o aktualnej pogodzie, oraz funkcję przetwarzająca
- * odpowiedź WeatherAPI.
+ * Klasa odpowiada za pobieranie danych ze strony internetowej oraz ich przetwarzanie
  */
 
 
@@ -43,14 +42,14 @@ public:
 private slots:
     /*!
      * \brief on_pushButton_clicked
-     * odpowiada za odswiezanie aplikacji w przypadku bledow
+     * odpowiada za odswieżanie aplikacji w przypadku błędów
      *
      */
     void on_pushButton_clicked();
     /*!
      * \brief on_results
-     * \param[in] reply- sprawdza czy polaczenie jest aktywne i nie wystapppil blad
-     * Pobiera dane z API, dzieki czemu aplikacja moze dzialac i przetwarzac dane
+     * \param[in] reply- sprawdza czy połączenie jest aktywne i czy nie wystąpił błąd
+     * Pobiera dane z API, dzięki czemu aplikacja może działać i przetwarzać dane
      */
     void on_results(QNetworkReply *reply);
 
@@ -63,23 +62,23 @@ private:
 signals:
     /*!
        * \brief sendData_1
-       * \param[in] a1- przeysla wartosc szerokosci geograficznej [kąt]
+       * \param[in] current_longitude- przesyła wartość szerokosci geograficznej [kąt]
        */
-    void sendData_1(float a1); //przesyly danych
+    void sendData_1(float current_longitude);
     /*!
        * \brief sendData_2
-       * \param[in] a1- przeysla wartosc dlugosci geograficznej [kąt]
+       * \param[in] current_latitude- przesyła wartość długosci geograficznej [kąt]
        */
-    void sendData_2(float a2);
+    void sendData_2(float current_latitude);
     /*!
        * \brief sendData_3
-       * \param[in] a1- przeysla wartosc wysokosci ISS [km]
+       * \param[in] current_altitude- przesyła wartość wysokosści ISS [km]
        */
-    void sendData_3(float a3);
+    void sendData_3(float current_altitude);
     /*!
        * \brief sendData_4
-       * \param[in] a1- przeysla wartosc predkosci ISS [km/h]
+       * \param[in] current_velocity- przesyła wartość szybkości ISS [km/h]
        */
-    void sendData_4(float a4);
+    void sendData_4(float current_velocity);
 };
 #endif // MAINWINDOW_H

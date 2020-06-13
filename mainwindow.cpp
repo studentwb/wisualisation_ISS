@@ -58,8 +58,8 @@ void MainWindow::on_results(QNetworkReply *reply)
         QJsonObject root = document.object(); //tutaj wyciagasz ten dokument jako obiekt typu JSON
 
         double current_velocity = root.value("velocity").toDouble();
-        double  current_latitude= root.value("latitude").toDouble();
-        double  current_longitude=root.value("longitude").toDouble();
+        double current_latitude= root.value("latitude").toDouble();
+        double current_longitude=root.value("longitude").toDouble();
         double current_altitude=root.value("altitude").toDouble();
 
         emit sendData_1(current_longitude); //wywlouje funkcje, ktora ma byc sygnalem

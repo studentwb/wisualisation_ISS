@@ -34,28 +34,28 @@ public:
     explicit GLWidget(QWidget *parent = nullptr);
     float angle;
     /*!
-        * \brief rysuje sfere, ktora odpowaida za tworzenie modelu planety
+        * \brief rysuje sfere, która odpowaida za tworzenie modelu planety
         * \param[in] Size - rozmiar sfery
         */
     void drawSphere(double Size);
     /*!
-        * \brief Obraca modelem miedzynarodowej stacji kosmicznej
+        * \brief Obraca modelem międzynarodowej stacji kosmicznej
         *
         */
     void rotateISS();
     /*!
-        * \brief Tworzy model 3d Miedzynordowej stacji komsicznej
+        * \brief Tworzy model 3d Międzynordowej stacji komsicznej
         * \param[in] Size- rozmiar stacji
         */
     void drawISS(double Size);
     /*!
-        * \brief Odpowiada za rysowanie sciezki, ktora przebyla miedzynarodowa stacja kosmiczna
+        * \brief Odpowiada za rysowanie ścieżki, która przebyła miedzynarodowa stacja kosmiczna
         *
         */
     void drawPath();
     /*!
-        * \brief Odpowiada za przetwarzanie danych miedzynarodowa stacja kosmiczna
-        * \return Punty w przestrenii kartezjanskiej
+        * \brief Odpowiada za przetwarzanie danych miedzynarodowej stacji kosmicznej
+        * Funkcja przekształca szerkość i długość geograficzna na punkty w przestrenii kartezjańskiej
         */
     void dataPath();
 private:
@@ -65,23 +65,23 @@ protected:
      void draw();
 private slots:
      /*!
-         * \brief Odpowiada za pobieranie danych od klasu mainwindow
-         * \param[in] value_longitude - dlugosc geograficzna w stopniach
+         * \brief Odpowiada za pobieranie danych z klasy MainWindow
+         * \param[in] value_longitude - długość geograficzna podana w stopniach
          */
      void getData_1(float value_longitude);
      /*!
-         * \brief Odpowiada za pobieranie danych od klasu mainwindow
-         * \param[in] value_latitude - szerokosc geograficzna w stopniach
+         * \brief Odpowiada za pobieranie danych z klasy MainWindow
+         * \param[in] value_latitude - szerokość geograficzna podana w stopniach
          */
      void getData_2(float value_latitude);
      /*!
-         * \brief Odpowiada za pobieranie danych od klasu mainwindow
-         * \param[in] value_altitude - odleglosc od skorupy ziemskiej w kilometrach
+         * \brief Odpowiada za pobieranie danych z klasy MainWindow
+         * \param[in] value_altitude - odleglość od skorupy ziemskiej podana w kilometrach
          */
      void getData_3(float value_altitude);
      /*!
-         * \brief Odpowiada za pobieranie danych od klasu mainwindow
-         * \param[in] value_velocity - predkosc w kilometrach na godzine
+         * \brief Odpowiada za pobieranie danych z klasy MainWindow
+         * \param[in] value_velocity - szybkość podana w kilometrach na godzine
          */
      void getData_4(float value_velocity);
 };
