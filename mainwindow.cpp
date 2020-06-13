@@ -62,15 +62,10 @@ void MainWindow::on_results(QNetworkReply *reply)
         double  current_longitude=root.value("longitude").toDouble();
         double current_altitude=root.value("altitude").toDouble();
 
-        float a1=current_longitude;
-        float a2=current_latitude;
-        float a3=current_altitude;
-        float a4=current_velocity;
-
-        emit sendData_1(a1); //wywlouje funkcje, ktora ma byc sygnalem
-        emit sendData_2(a2);
-        emit sendData_3(a3);
-        emit sendData_4(a4);
+        emit sendData_1(current_longitude); //wywlouje funkcje, ktora ma byc sygnalem
+        emit sendData_2(current_latitude);
+        emit sendData_3(current_altitude);
+        emit sendData_4(current_velocity);
 
         //szerokosc
         ui->lineEdit->setReadOnly(true);
