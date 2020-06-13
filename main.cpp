@@ -34,7 +34,13 @@
 #include <QApplication>
 /*! \mainpage Dokumentacja aplikacji Wizualizacja ISS
  * \section Wprowadzenie
+ * Aplikacja odpowiada za wizualizację Międzynarodowej Stacji Kosmicznej ISS.
+ * Projekt został zrealizowany w ramach przedmiotu Wizualizacja Danych Sensorycznychna Wydziale Elektroniki Politechniki Wrocławskiej.
+ *
  * Dokumentacja została wygenerowana za pomocą aplikacji Doxygen.
+ *
+ * Autor: Wojciech Baron
+ * Proawdzący: Dr. Bogdan Kreczmer
  */
 
 int main(int argc, char *argv[])

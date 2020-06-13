@@ -35,7 +35,7 @@ public:
     float angle;
     /*!
         * \brief rysuje sfere, ktora odpowaida za tworzenie modelu planety
-        * \param Size - rozmiar sfery
+        * \param[in] Size - rozmiar sfery
         */
     void drawSphere(double Size);
     /*!
@@ -45,7 +45,7 @@ public:
     void rotateISS();
     /*!
         * \brief Tworzy model 3d Miedzynordowej stacji komsicznej
-        * \param Size- rozmiar stacji
+        * \param[in] Size- rozmiar stacji
         */
     void drawISS(double Size);
     /*!
@@ -66,22 +66,22 @@ protected:
 private slots:
      /*!
          * \brief Odpowiada za pobieranie danych od klasu mainwindow
-         * \param value_longitude - dlugosc geograficzna w stopniach
+         * \param[in] value_longitude - dlugosc geograficzna w stopniach
          */
      void getData_1(float value_longitude);
      /*!
          * \brief Odpowiada za pobieranie danych od klasu mainwindow
-         * \param value_latitude - szerokosc geograficzna w stopniach
+         * \param[in] value_latitude - szerokosc geograficzna w stopniach
          */
      void getData_2(float value_latitude);
      /*!
          * \brief Odpowiada za pobieranie danych od klasu mainwindow
-         * \param value_altitude - odleglosc od skorupy ziemskiej w kilometrach
+         * \param[in] value_altitude - odleglosc od skorupy ziemskiej w kilometrach
          */
      void getData_3(float value_altitude);
      /*!
          * \brief Odpowiada za pobieranie danych od klasu mainwindow
-         * \param value_velocity - predkosc w kilometrach na godzine
+         * \param[in] value_velocity - predkosc w kilometrach na godzine
          */
      void getData_4(float value_velocity);
 };

@@ -49,7 +49,7 @@ private slots:
     void on_pushButton_clicked();
     /*!
      * \brief on_results
-     * \param reply- sprawdza czy polaczenie jest aktywne i nie wystapppil blad
+     * \param[in] reply- sprawdza czy polaczenie jest aktywne i nie wystapppil blad
      * Pobiera dane z API, dzieki czemu aplikacja moze dzialac i przetwarzac dane
      */
     void on_results(QNetworkReply *reply);
@@ -63,22 +63,22 @@ private:
 signals:
     /*!
        * \brief sendData_1
-       * \param a1- przeysla wartosc szerokosci geograficznej [kąt]
+       * \param[in] a1- przeysla wartosc szerokosci geograficznej [kąt]
        */
     void sendData_1(float a1); //przesyly danych
     /*!
        * \brief sendData_2
-       * \param a1- przeysla wartosc dlugosci geograficznej [kąt]
+       * \param[in] a1- przeysla wartosc dlugosci geograficznej [kąt]
        */
     void sendData_2(float a2);
     /*!
        * \brief sendData_3
-       * \param a1- przeysla wartosc wysokosci ISS [km]
+       * \param[in] a1- przeysla wartosc wysokosci ISS [km]
        */
     void sendData_3(float a3);
     /*!
        * \brief sendData_4
-       * \param a1- przeysla wartosc predkosci ISS [km/h]
+       * \param[in] a1- przeysla wartosc predkosci ISS [km/h]
        */
     void sendData_4(float a4);
 };

@@ -75,7 +75,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Prędkość [km/h]:</string>
+     <string>Szybkość [km/h]:</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
